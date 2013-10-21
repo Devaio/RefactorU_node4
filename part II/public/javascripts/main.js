@@ -11,9 +11,11 @@ var clearTravel = function clearTravel(){
 var newTravel = function newTravel(route){
 	clearTravel()
 	$button.removeClass()
+
 	$.get('/'+route, function(data){
 		$place.append(data.place)
 		$desc.append(data.desc)
+
 		$button.addClass(route)
 	})
 }
@@ -21,6 +23,7 @@ var newTravel = function newTravel(route){
 
 $(document).on('click', '.seville', function(){
 	newTravel('canary')
+
 })
 
 $(document).on('click', '.canary', function(){
@@ -37,6 +40,7 @@ $(document).on('click', '.strait', function(){
 
 $(document).on('click', '.guam', function(){
 	newTravel('philippines')
+	$button.remove()
 })
 
 
