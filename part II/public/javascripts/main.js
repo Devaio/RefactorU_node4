@@ -3,43 +3,49 @@ $place = $('.place')
 $desc = $('.desc')
 $button = $('.seville')
 
-var clearTravel = function clearTravel(){
-	$place.text('')
-	$desc.text('')
-}
+var Travel = (function(){
 
-var newTravel = function newTravel(route){
+	var clearTravel = function clearTravel(){
+		$place.text('')
+		$desc.text('')
+	} 
+	var newTravel = function newTravel(route){
 	clearTravel()
 	$button.removeClass()
+	$place.hide()
+	$desc.hide()
+		$.get('/'+route, function(data){
+			$place.append(data.place).fadeIn('slow')
+			$desc.append(data.desc).fadeIn('slow')
 
-	$.get('/'+route, function(data){
-		$place.append(data.place)
-		$desc.append(data.desc)
+			$button.addClass(route)
+		})
+	}
 
-		$button.addClass(route)
-	})
-}
-
+	return {
+		newTravel : newTravel,
+		clearTravel : clearTravel
+	}
+})();
 
 $(document).on('click', '.seville', function(){
-	newTravel('canary')
-
+	Travel.newTravel('canary')
 })
 
 $(document).on('click', '.canary', function(){
-	newTravel('verde')
+	Travel.newTravel('verde')
 })
 
 $(document).on('click', '.verde', function(){
-	newTravel('strait')
+	Travel.newTravel('strait')
 })
 
 $(document).on('click', '.strait', function(){
-	newTravel('guam')
+	Travel.newTravel('guam')
 })
 
 $(document).on('click', '.guam', function(){
-	newTravel('philippines')
+	Travel.newTravel('philippines')
 	$button.remove()
 })
 
